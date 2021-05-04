@@ -9,6 +9,7 @@ use App\Http\Resources\API\BalanceGetResource;
 use App\Models\Balance;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BalanceController extends Controller
 {
@@ -38,9 +39,13 @@ class BalanceController extends Controller
         $balance = Balance::where('user_id', $user_id)->first();
         $type = 'deposit';
         if ($amount < 0) {
-            $amount *= -1;
             $type = 'withdraw';
-            $balance->amount = bcsub($balance->amount, $amount, 2);
+            $amount *= -1;
+            if(0 > bcsub($balance->amount, $amount, 2)) {
+                $balance->amount = 0;
+            } else {
+                $balance->amount = bcsub($balance->amount, $amount, 2);
+            }
         } else {
             $balance->amount = bcadd($balance->amount, $amount, 2);
         }
