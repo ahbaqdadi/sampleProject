@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\API\BalanceAddMoneyResource;
+use App\Http\Resources\API\BalanceGetResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        BalanceGetResource::withoutWrapping();
+        BalanceAddMoneyResource::withoutWrapping();
     }
 }

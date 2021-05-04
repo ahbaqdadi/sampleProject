@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ {
+    BalanceController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/get-balance/{user_id}', [BalanceController::class, 'get'])->where(['user_id' => '[0-9]+']);
+Route::post('/add-money', [BalanceController::class, 'addMoney']);
